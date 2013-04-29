@@ -214,7 +214,7 @@
       fragments along a significant number of paths, explores the
       operational impact of fragmentation and the reasons and scenarios where 
       drops occur, and considers the effect of fragment drops on applications
-      where fragmentation is know to occur, particularly including DNS.</t>    
+      where fragmentation is known to occur, particularly including DNS.</t>    
     </abstract>
   </front>
 
@@ -233,7 +233,8 @@
       <t><xref target="itHappens"/> begins with some observations on how often
       IPv6 fragment loss occurs in practice. We go on to look at the
       operational reasons for filtering fragments, a key aspect of which is
-      the limitations they expose in the application of security policy, at resource bottlenecks and in forwarding decisions. <xref
+      the limitations they expose in the application of security policy, at 
+      resource bottlenecks and in forwarding decisions. <xref
       target="appEffect"/> then looks at the impact on key applications,
       particularly DNS.</t>
 
@@ -250,8 +251,8 @@
       application-specific or more general; but the amount of time needed to
       specify and deploy a given resolution will be a major constraint in
       choosing amongst them. In any event, that discussion is likely to
-      proceed in multiple directions, occur in different areas and is therefore considered beyond the
-      scope of this memo.</t>
+      proceed in multiple directions, occur in different areas and is therefore
+      considered beyond the scope of this memo.</t>
     </section>
 
     <section anchor="itHappens" title="Observations and Rationale">
@@ -261,7 +262,8 @@
       filtering. The authors used fragmented DNS packets to determine the
       latter and found for IPv6 that filtering appeared to be occurring on
       some 10% of the tested paths. The filtering appeared to be located at
-      the edge (enterprise content provider and customer access networks) rather than in the core of internet service providers.</t>
+      the edge (enterprise content provider and customer access networks) 
+      rather than in the core of internet service providers.</t>
 
       <section title="Possible Causes">
         <t>Why does such filtering happen? One probable cause is non-conformant
@@ -271,12 +273,14 @@
         Too Big. Both implementation and management knobs and defaults on low end-cpe 
         should improve over time, reducing the problem somewhat.</t>
 
-        <t>Some filtering and dropping of fragments is know to be done for hardware,
+        <t>Some filtering and dropping of fragments is known to be done for hardware,
         performance, or topological considerations.</t>
 
-        <t>Stateful inspection devices or destination hosts can readily experience resource exhaustion if
-        they are flooded with fragments that are not followed by the remaining
-        fragments of the unfragmented packet. Holding Fragments for reassembly even on end-system firewalls can readily result in an effective denial of service.</t>
+        <t>Stateful inspection devices or destination hosts can readily experience
+        resource exhaustion if they are flooded with fragments that are not followed
+        by the remaining fragments of the unfragmented packet. Holding Fragments for
+        reassembly even on end-system firewalls can readily result in an effective
+        denial of service.</t>
 
         <t> Stateless ACLs at layer 4 and up may be difficult
         to apply to fragments other than the one in which the upper
@@ -285,8 +289,14 @@
         hosts can cause fragments to be wrongfully discarded, or can allow
         exploits to pass undetected through middleboxes. Stateless Load
         balancing schemes may hash fragmented datagrams from the same flow to
-        different paths because the 5-tuple may available on only the initial
-        fragment. While rehashing has the possibility of reording packets in ISP cores it's not disasterous, however in front of a stateful inspection device, load balancer tier, or anycast service instance where headers other than the L3 header for example L4 header, interface index (for traffic already rehashed onto different paths), DS fields,  are considered as part of the hash it may result in the fragments being delivered to different end-systems</t>
+        different paths because the 5-tuple may be available on only the initial
+        fragment. While rehashing has the possibility of reordering packets 
+        in ISP cores it is not disasterous. However, in front of a stateful 
+        inspection device, load balancer tier, or anycast service instance, where 
+        headers other than the L3 header -- for example, the L4 header, interface index (for 
+        traffic already rehashed onto different paths), DS fields -- are considered
+        as part of the hash, rehashing may result in the fragments being delivered to different
+        end-systems</t>
 
         <t>Leaving aside these incentives towards fragment dropping, other
         considerations may weigh on the operator's mind. One example cited on
@@ -337,7 +347,7 @@
 
         <t>Other applications, such as Network File System, NFS, are also
         known to fragment their large UDP packets but this is most often kept
-        within a single organization network and should not be impacted by
+        within a single organization's' network and should not be impacted by
         fragment dropping at the Internet core or edges.</t>
       </section>
     </section>
