@@ -181,7 +181,7 @@
       </address>
     </author>
 
-    <date month="April" year="2013"/>
+    <date month="May" year="2013"/>
 
     <!-- Meta-data Declarations -->
 
@@ -276,12 +276,15 @@
         <t>Some filtering and dropping of fragments is known to be done for hardware,
         performance, or topological considerations.</t>
 
+        <section title="Stateful inspection">
         <t>Stateful inspection devices or destination hosts can readily experience
         resource exhaustion if they are flooded with fragments that are not followed
         by the remaining fragments of the unfragmented packet. Holding Fragments for
         reassembly even on end-system firewalls can readily result in an effective
         denial of service.</t>
+      </section>
 
+      <section title="Stateless ACLs">
         <t> Stateless ACLs at layer 4 and up may be difficult
         to apply to fragments other than the one in which the upper
         layer header is present. As <xref target="Attacks"/> demonstrates,
@@ -293,11 +296,11 @@
         fragment. While rehashing has the possibility of reordering packets 
         in ISP cores it is not disasterous. However, in front of a stateful 
         inspection device, load balancer tier, or anycast service instance, where 
-        headers other than the L3 header -- for example, the L4 header, interface index (for 
-        traffic already rehashed onto different paths), DS fields -- are considered
-        as part of the hash, rehashing may result in the fragments being delivered to different
-        end-systems</t>
+        headers other than the L3 header -- for example, the L4 header, interface index (for traffic already rehashed onto different paths), DS fields -- are considered
+        as part of the hash, rehashing may result in the fragments being delivered to different end-systems</t>
+      </section>
 
+      <section title="performance considerations">
         <t>Leaving aside these incentives towards fragment dropping, other
         considerations may weigh on the operator's mind. One example cited on
         the NANOG list was that of a router where fragment processing was done
@@ -311,14 +314,16 @@
         It is common practice <xref target="RFC6192"/> to recommend that
         control-plane ACLs protecting routers and network devices be
         configured to drop all fragments.</t>
+      </section>
 
+      <section title="conclusions">
         <t>Operators weigh the risks associated with each of the
         considerations just enumerated, and come up with the most suitable
         policy for their circumstances. It is likely that at least some
         operators will find it desirable to drop fragments in at least some
         cases.</t>
 
-        <t>The IETF can help this effort by identifying specific classes of
+        <t>The IETF and operators can help this effort by identifying specific classes of
         fragments that do not represent legitimate use cases and hence should
         always be dropped. Examples of this work are given by <xref
         target="draft-6man-atomic"/> and <xref
@@ -328,27 +333,28 @@
         remain where legitimate fragments are discarded for legitimate
         reasons. The potential problems these cases pose for applications is
         our next topic.</t>
+        </section>
       </section>
 
       <!-- itHappens -->
 
       <section anchor="appEffect" title="Impact on Applications">
-        <t>Some applications can live without fragmentation, some cannot. DNS
-        is one application that may be vulnerable when fragment dropping
+        <t>Some applications can live without fragmentation, some cannot. UDP DNS
+        is one application that that the potential to be impacted when fragment dropping
         occurs. EDNS0 extensions <xref target="RFC2761"/> allow for responses
-        in UDP PDU greater than 512 bytes. Particularly with DNSSEC, responses
-        may be larger than the MTU and fragmentation at the sending host in
-        order to respond using UDP is desirable and legal. The current choices
+        in UDP PDUs that are greater than 512 bytes. In Particular with DNSSEC, responses
+        may be larger than the link MTU and fragmentation would therefore occur at the sending host in order to respond using UDP. The current choices
         open to the operators of DNS servers in this situation are to defer
         deployment of DNSSEC, fragment responses, or use TCP if there are
         cases where the rrset would be expected to exceed the MTU. The use of
         fallback to TCP will impose a major resource and performance hit and
         increases vulnerability to denial of service attacks.</t>
 
-        <t>Other applications, such as Network File System, NFS, are also
-        known to fragment their large UDP packets but this is most often kept
-        within a single organization's' network and should not be impacted by
-        fragment dropping at the Internet core or edges.</t>
+        <t>Other applications, such as the Network File System, NFS, are also
+        known to fragment large UDP packets for datagrams larger than the MTU. 
+        NFS is most often restricted to the internal networks of organizations.
+        In general, managing NFS connectivity should not be impacted by
+        decisions mananging fragment drops at network borders or end-systems.</t>
       </section>
     </section>
 
@@ -365,8 +371,7 @@
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <t>[Obviously a few things to say here, or we can find a few good
-      references.]</t>
+      <t>The potential for denial of service attacks, as well a limitations inherent in upper-layer filtering when dealing with non-initial fragments are significant issues under consideration by operators and end-users filtering fragments. This document does not offer alternative solutions to that problem, it does describe the impact of those filtering practices.</t>
     </section>
   </middle>
 
