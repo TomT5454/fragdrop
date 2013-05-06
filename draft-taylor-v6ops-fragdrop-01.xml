@@ -294,10 +294,12 @@
         balancing schemes may hash fragmented datagrams from the same flow to
         different paths because the 5-tuple may be available on only the initial
         fragment. While rehashing has the possibility of reordering packets 
-        in ISP cores it is not disasterous. However, in front of a stateful 
+        in ISP cores it is not disastrous. However, in front of a stateful 
         inspection device, load balancer tier, or anycast service instance, where 
-        headers other than the L3 header -- for example, the L4 header, interface index (for traffic already rehashed onto different paths), DS fields -- are considered
-        as part of the hash, rehashing may result in the fragments being delivered to different end-systems</t>
+        headers other than the L3 header -- for example, the L4 header, interface
+        index (for traffic already rehashed onto different paths), DS fields
+        -- are considered as part of the hash, rehashing may result in the 
+        fragments being delivered to different end-systems</t>
       </section>
 
       <section title="performance considerations">
@@ -343,7 +345,8 @@
         is one application that that the potential to be impacted when fragment dropping
         occurs. EDNS0 extensions <xref target="RFC2761"/> allow for responses
         in UDP PDUs that are greater than 512 bytes. In Particular with DNSSEC, responses
-        may be larger than the link MTU and fragmentation would therefore occur at the sending host in order to respond using UDP. The current choices
+        may be larger than the link MTU and fragmentation would therefore occur at
+        the sending host in order to respond using UDP. The current choices
         open to the operators of DNS servers in this situation are to defer
         deployment of DNSSEC, fragment responses, or use TCP if there are
         cases where the rrset would be expected to exceed the MTU. The use of
@@ -371,7 +374,12 @@
     </section>
 
     <section anchor="Security" title="Security Considerations">
-      <t>The potential for denial of service attacks, as well a limitations inherent in upper-layer filtering when dealing with non-initial fragments are significant issues under consideration by operators and end-users filtering fragments. This document does not offer alternative solutions to that problem, it does describe the impact of those filtering practices.</t>
+      <t>The potential for denial of service attacks, as well as limitations
+      inherent in upper-layer filtering when dealing with non-initial
+      fragments are significant issues under consideration by operators
+      and end-users filtering fragments. This document does not offer 
+      alternative solutions to that problem, it does describe the impact 
+      of those filtering practices.</t>
     </section>
   </middle>
 
